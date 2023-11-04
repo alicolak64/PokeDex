@@ -20,7 +20,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        let navigationController = UINavigationController(rootViewController: ViewController())
+        
+        
+        let service : PokemonService = PokemonManager()
+        let homeScreenViewModel = HomeViewModel(pokemonService: service)
+        let homeVC = HomeViewController(viewModel: homeScreenViewModel)
+        let navigationController = UINavigationController(rootViewController: homeVC)
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         
