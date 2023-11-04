@@ -121,4 +121,9 @@ class DetailViewModel {
         
     }
     
+    func getProgressValue(stat: Int) -> Float {
+        let value = Float(stat) / 255
+        return value
+    }
+    
 }

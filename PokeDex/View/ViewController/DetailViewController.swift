@@ -30,15 +30,18 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
     
     func updatePokemon(pokemon: PokemonDetailExtensionDto) {
         self.pokemon = pokemon
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else {
+                return
+            }
             self.view.backgroundColor = pokemon.color
             self.pokeIdLabel.text = "\(pokemon.pokemonDetailDto.idString)"
             self.pokemonImage.kf.setImage(with: URL(string: pokemon.pokemonDetailDto.imageUrl))
             self.typeArray = pokemon.pokemonDetailDto.types!
             self.typeCollectionView?.reloadData()
             self.aboutLabel.textColor = pokemon.color
-            self.kgLabel.text = "\(pokemon.pokemonDetailDto.weight!)"
-            self.mLabel.text = "\(pokemon.pokemonDetailDto.height!)"
+            self.kgLabel.text = "\(pokemon.pokemonDetailDto.weight!) kg"
+            self.mLabel.text = "\(pokemon.pokemonDetailDto.height!) m"
             let abilities = pokemon.pokemonDetailDto.abilities
             let combinedText = abilities!.joined(separator: "\n")
             self.moves2Label.text = combinedText
@@ -68,6 +71,24 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
             self.numberSATKLabel.text = "\(pokemon.pokemonDetailDto.stats![3].base_stat)"
             self.numberSDEFLabel.text = "\(pokemon.pokemonDetailDto.stats![4].base_stat)"
             self.numberSPDLabel.text = "\(pokemon.pokemonDetailDto.stats![5].base_stat)"
+            
+            let hp = viewModel.getProgressValue(stat: pokemon.pokemonDetailDto.stats![0].base_stat)
+            self.progressView1.progress = Float(hp)
+            
+            let atk = viewModel.getProgressValue(stat: pokemon.pokemonDetailDto.stats![1].base_stat)
+            self.progressView2.progress = Float(atk)
+            
+            let def = viewModel.getProgressValue(stat: pokemon.pokemonDetailDto.stats![2].base_stat)
+            self.progressView3.progress = Float(def)
+            
+            let satk = viewModel.getProgressValue(stat: pokemon.pokemonDetailDto.stats![3].base_stat)
+            self.progressView4.progress = Float(satk)
+           
+            let sdef = viewModel.getProgressValue(stat: pokemon.pokemonDetailDto.stats![4].base_stat)
+            self.progressView5.progress = Float(sdef)
+            
+            let spd = viewModel.getProgressValue(stat: pokemon.pokemonDetailDto.stats![5].base_stat)
+            self.progressView6.progress = Float(spd)
         }
 
         
@@ -454,7 +475,7 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
         progressView.progressViewStyle = .default
         progressView.progressTintColor = .systemOrange
         progressView.trackTintColor = .systemOrange.withAlphaComponent(0.4)
-        progressView.progress = 0.5 // İsterseniz başlangıç değerini buradan ayarlayabilirsiniz (0 ile 1 arasında)
+        
         return progressView
     }()
     
@@ -531,8 +552,8 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
         let collectionViewWidth = view.bounds.width
         let itemWidth = collectionViewWidth * 0.2
         let itemSpacing: CGFloat = 20
-        
-        let leftInset = (collectionViewWidth - (itemWidth + itemSpacing)) / (CGFloat(typeArray.count) + 1)
+        print(typeArray.count)
+        let leftInset = (collectionViewWidth - (itemWidth + itemSpacing)) / (CGFloat(typeArray.count) + 3)
         let rightInset = (collectionViewWidth - (itemWidth + itemSpacing)) / 2
 
         layout.sectionInset = UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
@@ -588,6 +609,7 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
         progressStack.addArrangedSubview(progressView4)
         progressStack.addArrangedSubview(progressView5)
         progressStack.addArrangedSubview(progressView6)
+        
         
         
         NSLayoutConstraint.activate([
@@ -667,12 +689,12 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
 
 extension DetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(typeArray.count)
         return typeArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TypeCell.identifier, for: indexPath) as! TypeCell
-        print(typeArray[indexPath.row])
         cell.pokemonNameLabel.text = typeArray[indexPath.row]
         cell.typeView.backgroundColor = viewModel.getColorFromString(color: typeArray[indexPath.row])
         

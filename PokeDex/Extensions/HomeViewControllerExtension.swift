@@ -68,12 +68,15 @@ extension HomeViewController {
         let dissmissKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(dissmissKeyboard))
         //view.addGestureRecognizer(dissmissKeyboardGesture)
         
-        let logoImage = UIImage(named: "pokeball")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        let logoImage = UIImage(named: "pokeball2")?.withTintColor(.white, renderingMode: .alwaysOriginal)
         let barLogo = UIBarButtonItem(image: logoImage, style: .plain, target: self, action: nil)
         barLogo.imageInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
         let appTitle = UIBarButtonItem(title: "Pokédex", style: .plain, target: self, action: nil)
+        
+        
         appTitle.setTitleTextAttributes([.foregroundColor : UIColor.white, .font : UIFont.systemFont(ofSize: 22, weight: .bold)], for: .normal)
         appTitle.imageInsets = UIEdgeInsets(top: 20, left: 10, bottom: 0, right: 0)
+        
         
         
         navigationController?.navigationBar.topItem?.leftBarButtonItems = [barLogo,appTitle]
@@ -162,6 +165,7 @@ extension HomeViewController : SortViewProtocol {
         case .number:
             viewModel.changeSortMethodId()
         }
+        self.sortView.isHidden = true
     }
 }
 

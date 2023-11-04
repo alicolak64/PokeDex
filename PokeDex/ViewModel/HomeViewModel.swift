@@ -9,7 +9,7 @@ import Foundation
 
 
 class HomeViewModel {
-    
+    private var searchText: String?
     private let pokemonService : PokemonService
     
     weak var delegate : HomeViewModelDelegate?
@@ -54,7 +54,9 @@ class HomeViewModel {
     }
     
     func getNewPokemons() {
-        
+        if let searchText {
+            return
+        }
         if isSorteedId {
             fetchNewPokemonIdSorted()
         } else {
@@ -64,7 +66,7 @@ class HomeViewModel {
     }
     
     func searchPokemon(text: String) {
-        
+        searchText = text
         if text.count != 0 {
             
             representedPokemons = allPokemons.filter { pokemon in
