@@ -8,36 +8,38 @@
 import UIKit
 
 extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSource {
-        
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return pokemons.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "pokemonCVC", for: indexPath) as! PokemonCVC
+        
         cell.configure(with: pokemons[indexPath.row])
+
         return cell
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentHeight = scrollView.contentSize.height
-            let visibleHeight = scrollView.bounds.height
-            let scrollOffset = scrollView.contentOffset.y
+        let visibleHeight = scrollView.bounds.height
+        let scrollOffset = scrollView.contentOffset.y
+        
+        let scrollPercentage = (scrollOffset + visibleHeight) / contentHeight
+        
+        if scrollPercentage >= 0.8 {
             
-            let scrollPercentage = (scrollOffset + visibleHeight) / contentHeight
-            
-            if scrollPercentage >= 0.8 {
-                
-                let now = Date()
-                if let lastRequestTime = lastRequestTime, now.timeIntervalSince(lastRequestTime) < 1 {
-                    return 
-                }
-                            
-                viewModel.getNewPokemons()
-                
-                self.lastRequestTime = now
-                
+            let now = Date()
+            if let lastRequestTime = lastRequestTime, now.timeIntervalSince(lastRequestTime) < 1 {
+                return
             }
+            
+            viewModel.getNewPokemons()
+            
+            self.lastRequestTime = now
+            
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -46,6 +48,15 @@ extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSo
         let destinationViewModel = DetailViewModel(pokemonService: service)
         let destinationVC = DetailViewController(viewModel: destinationViewModel)
         destinationVC.pokemonId = pokemonId
+        let backButton = UIBarButtonItem()
+        backButton.title = pokemons[indexPath.row].name
+        backButton.tintColor = .white
+        backButton.style = .plain
+        backButton.setTitleTextAttributes([
+            .font: UIFont.boldSystemFont(ofSize:30),
+        ], for: .normal)
+        
+        navigationItem.backBarButtonItem = backButton
         navigationController?.pushViewController(destinationVC, animated: true)
     }
     
@@ -55,7 +66,7 @@ extension HomeViewController {
     func initialConfig(){
         
         let dissmissKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(dissmissKeyboard))
-        view.addGestureRecognizer(dissmissKeyboardGesture)
+        //view.addGestureRecognizer(dissmissKeyboardGesture)
         
         let logoImage = UIImage(named: "pokeball")?.withTintColor(.white, renderingMode: .alwaysOriginal)
         let barLogo = UIBarButtonItem(image: logoImage, style: .plain, target: self, action: nil)

@@ -6,19 +6,14 @@
 //
 
 import UIKit
-
+import Kingfisher
 class DetailViewController: UIViewController, DetailViewModelDelegate{
     
     
     var pokemon : PokemonDetailExtensionDto?
-    
-    
     private var typeCollectionView: UICollectionView?
-    
-    var emptyArray = [String]()
-    
+    var typeArray = [String]()
     var pokemonId : Int?
-    
     let viewModel : DetailViewModel
     
     
@@ -26,6 +21,7 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         self.viewModel.delegate = self
+        
     }
     
     required init?(coder: NSCoder) {
@@ -34,7 +30,59 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
     
     func updatePokemon(pokemon: PokemonDetailExtensionDto) {
         self.pokemon = pokemon
+        DispatchQueue.main.async {
+            self.view.backgroundColor = pokemon.color
+            self.pokeIdLabel.text = "\(pokemon.pokemonDetailDto.idString)"
+            self.pokemonImage.kf.setImage(with: URL(string: pokemon.pokemonDetailDto.imageUrl))
+            self.typeArray = pokemon.pokemonDetailDto.types!
+            self.typeCollectionView?.reloadData()
+            self.aboutLabel.textColor = pokemon.color
+            self.kgLabel.text = "\(pokemon.pokemonDetailDto.weight!)"
+            self.mLabel.text = "\(pokemon.pokemonDetailDto.height!)"
+            let abilities = pokemon.pokemonDetailDto.abilities
+            let combinedText = abilities!.joined(separator: "\n")
+            self.moves2Label.text = combinedText
+            self.descLabel.text = pokemon.description
+            self.statsLabel.textColor = pokemon.color
+            self.hpLabel.textColor = pokemon.color
+            self.atkLabel.textColor = pokemon.color
+            self.defLabel.textColor = pokemon.color
+            self.satkLabel.textColor = pokemon.color
+            self.sdefLabel.textColor = pokemon.color
+            self.spdLabel.textColor = pokemon.color
+            self.progressView1.progressTintColor = pokemon.color
+            self.progressView1.trackTintColor = pokemon.color!.withAlphaComponent(0.4)
+            self.progressView2.progressTintColor = pokemon.color
+            self.progressView2.trackTintColor = pokemon.color!.withAlphaComponent(0.4)
+            self.progressView3.progressTintColor = pokemon.color
+            self.progressView3.trackTintColor = pokemon.color!.withAlphaComponent(0.4)
+            self.progressView4.progressTintColor = pokemon.color
+            self.progressView4.trackTintColor = pokemon.color!.withAlphaComponent(0.4)
+            self.progressView5.progressTintColor = pokemon.color
+            self.progressView5.trackTintColor = pokemon.color!.withAlphaComponent(0.4)
+            self.progressView6.progressTintColor = pokemon.color
+            self.progressView6.trackTintColor = pokemon.color!.withAlphaComponent(0.4)
+            self.numberHPLabel.text = "\(pokemon.pokemonDetailDto.stats![0].base_stat)"
+            self.numberATKLabel.text = "\(pokemon.pokemonDetailDto.stats![1].base_stat)"
+            self.numberDEFLabel.text = "\(pokemon.pokemonDetailDto.stats![2].base_stat)"
+            self.numberSATKLabel.text = "\(pokemon.pokemonDetailDto.stats![3].base_stat)"
+            self.numberSDEFLabel.text = "\(pokemon.pokemonDetailDto.stats![4].base_stat)"
+            self.numberSPDLabel.text = "\(pokemon.pokemonDetailDto.stats![5].base_stat)"
+        }
+
+        
     }
+    
+    lazy var pokeIdLabel : UILabel = {
+           let label = UILabel()
+           label.translatesAutoresizingMaskIntoConstraints = false
+           label.textAlignment = .center
+            label.textColor = .white
+            label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+           return label
+       }()
+
+       
 
     lazy var ballImage: UIImageView = {
         let imageView = UIImageView()
@@ -46,7 +94,7 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
     
     lazy var pokemonImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "image")
+        
          imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
          imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +114,6 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
        let label = UILabel()
        label.translatesAutoresizingMaskIntoConstraints = false
        label.textAlignment = .center
-        label.textColor = .systemOrange
         label.font = UIFont.systemFont(ofSize: 16, weight: .black)
         label.text = "About"
        return label
@@ -117,7 +164,6 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
        label.textAlignment = .center
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.text = "6,9 kg"
        return label
    }()
     
@@ -167,7 +213,6 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
        label.textAlignment = .center
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.text = "0,7 m"
        return label
    }()
     
@@ -208,10 +253,6 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
         label.textColor = .black
         label.numberOfLines = 2
         label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
-        label.text = """
-        Chlorophyll
-        Overgrow
-        """
        return label
    }()
     
@@ -242,7 +283,6 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
         label.textColor = .black
         label.numberOfLines = 4
         label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.text = "There is a plant seed on its back right from the day this Pokémon is born. The seed slowly grows larger."
        return label
    }()
     
@@ -250,7 +290,6 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
        let label = UILabel()
        label.translatesAutoresizingMaskIntoConstraints = false
        label.textAlignment = .center
-        label.textColor = .systemOrange
         label.font = UIFont.systemFont(ofSize: 16, weight: .black)
         label.text = "Base Stats"
        return label
@@ -261,7 +300,7 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .horizontal
         view.distribution = .fill
-        view.spacing = 0
+        view.spacing = 10
         view.alignment = .center
         return view
     }()
@@ -351,7 +390,6 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
        label.textAlignment = .center
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.text = "060"
        return label
    }()
     
@@ -361,7 +399,6 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
        label.textAlignment = .center
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.text = "045"
        return label
    }()
     
@@ -371,7 +408,6 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
        label.textAlignment = .center
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.text = "050"
        return label
    }()
     
@@ -381,7 +417,6 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
        label.textAlignment = .center
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.text = "090"
        return label
    }()
     
@@ -391,7 +426,6 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
        label.textAlignment = .center
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.text = "080"
        return label
    }()
     
@@ -401,7 +435,6 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
        label.textAlignment = .center
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        label.text = "070"
        return label
    }()
     
@@ -477,9 +510,8 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.viewModel.getPokemon(pokemonId: pokemonId!)
         view.backgroundColor = .systemOrange
-        emptyArray.append("Deneme")
-        emptyArray.append("Deneme2")
         configure()
         setupViews()
     }
@@ -500,7 +532,7 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
         let itemWidth = collectionViewWidth * 0.2
         let itemSpacing: CGFloat = 20
         
-        let leftInset = (collectionViewWidth - (itemWidth + itemSpacing)) / (CGFloat(emptyArray.count) + 1)
+        let leftInset = (collectionViewWidth - (itemWidth + itemSpacing)) / (CGFloat(typeArray.count) + 1)
         let rightInset = (collectionViewWidth - (itemWidth + itemSpacing)) / 2
 
         layout.sectionInset = UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
@@ -509,6 +541,7 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
     }
     
     private func setupViews() {
+        view.addSubview(pokeIdLabel)
         view.addSubview(ballImage)
         view.addSubview(whiteView)
         view.addSubview(pokemonImage)
@@ -556,7 +589,12 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
         progressStack.addArrangedSubview(progressView5)
         progressStack.addArrangedSubview(progressView6)
         
+        
         NSLayoutConstraint.activate([
+            
+            pokeIdLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 55),
+            pokeIdLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            
             ballImage.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
             ballImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             ballImage.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
@@ -619,6 +657,7 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
             progressView4.widthAnchor.constraint(equalTo: statsHorizantalStack.widthAnchor, multiplier: 0.6),
             progressView5.widthAnchor.constraint(equalTo: statsHorizantalStack.widthAnchor, multiplier: 0.6),
             progressView6.widthAnchor.constraint(equalTo: statsHorizantalStack.widthAnchor, multiplier: 0.6),
+        
         ])
     }
     
@@ -628,12 +667,14 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
 
 extension DetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return emptyArray.count
+        return typeArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TypeCell.identifier, for: indexPath) as! TypeCell
-        cell.pokemonNameLabel.text = emptyArray[indexPath.row]
+        print(typeArray[indexPath.row])
+        cell.pokemonNameLabel.text = typeArray[indexPath.row]
+        cell.typeView.backgroundColor = viewModel.getColorFromString(color: typeArray[indexPath.row])
         
         return cell
     }

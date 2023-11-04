@@ -1,4 +1,4 @@
-//
+
 //  SpeciesDto.swift
 //  PokemonAPI
 //
@@ -10,14 +10,13 @@ import UIKit
 struct PokemonDetailExtensionDto {
     
     var pokemonDetailDto: PokemonDetailDto
-    var descripiton : String?
-    var color : UIColor?
+    var description: String?
+    var color: UIColor?
     
-    init(pokemonDetailDto: PokemonDetailDto, descripiton: String? = nil, color: UIColor? = nil) {
+    init(pokemonDetailDto: PokemonDetailDto, description: String? = nil, color: UIColor? = nil) {
         self.pokemonDetailDto = pokemonDetailDto
-        self.descripiton = descripiton
+        self.description = description?.replacingOccurrences(of: "\n", with: " ").replacingOccurrences(of: "\t", with: " ").replacingOccurrences(of: "POKéMON", with: "Pokémon") ?? ""
         self.color = color
     }
-    
 }
 

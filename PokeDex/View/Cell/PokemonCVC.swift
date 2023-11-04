@@ -78,7 +78,7 @@ class PokemonCVC: UICollectionViewCell {
             pokemonImage.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             pokemonImage.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             pokemonImage.widthAnchor.constraint(equalToConstant: contentView.frame.width * 0.8),
-            pokemonImage.heightAnchor.constraint(equalToConstant: contentView.frame.height * 0.8),
+            pokemonImage.heightAnchor.constraint(equalToConstant: contentView.frame.height * 0.5),
             
             pokemonIdLabel.topAnchor.constraint(equalTo: contentView.topAnchor , constant: 10),
             pokemonIdLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -10),

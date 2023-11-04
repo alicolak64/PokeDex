@@ -37,10 +37,10 @@ class DetailViewModel {
                         switch result {
                         case .success(let species):
                             
-                            let descripiton = self.getRandomFlavorText(flavorTexts: species.flavor_text_entries)
+                            let description = self.getRandomFlavorText(flavorTexts: species.flavor_text_entries)
                             
                             self.delegate?.updatePokemon(pokemon: PokemonDetailExtensionDto(pokemonDetailDto: pokemonDto,
-                                                                                            descripiton: descripiton, color: color))
+                                                                                            description: description, color: color))
                             
                         case .failure(_):
                             
@@ -48,7 +48,7 @@ class DetailViewModel {
                             let descripiton = "Default Flavor Text"
                             
                             self.delegate?.updatePokemon(pokemon: PokemonDetailExtensionDto(pokemonDetailDto: pokemonDto,
-                                                                                            descripiton: descripiton, color: color))
+                                                                                            description: descripiton, color: color))
                         }
                         
                     }
@@ -56,11 +56,11 @@ class DetailViewModel {
                     )
                 } else {
                     
-                    let descripiton = "Default Flavor Text"
-
+                    let description = "Default Flavor Text"
+                    
                     
                     self.delegate?.updatePokemon(pokemon: PokemonDetailExtensionDto(pokemonDetailDto: pokemonDto,
-                                                                                    descripiton: descripiton, color: color))
+                                                                                    description: description, color: color))
                 }
                 
             case .failure(let error):
@@ -77,7 +77,7 @@ class DetailViewModel {
         }
     }
     
-    private func getColorFromString(color: String) -> UIColor {
+    func getColorFromString(color: String) -> UIColor {
         let colorMap = [
             "normal": "#A8A77A",
             "fire": "#EE8130",
@@ -96,10 +96,12 @@ class DetailViewModel {
             "dragon": "#6F35FC",
             "dark": "#705746",
             "steel": "#B7B7CE",
-            "fairy": "#D685AD"
+            "fairy": "#D685AD",
+            "unknown": "#4D5645",
+            "shadow": "#573C14"
         ]
         
-        return UIColor(hex: colorMap[color]!) ?? UIColor.black
+        return UIColor(hex: colorMap[color.lowercased()]!) ?? UIColor.black
         
     }
     
