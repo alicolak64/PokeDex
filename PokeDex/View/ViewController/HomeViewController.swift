@@ -14,6 +14,8 @@ class HomeViewController: UIViewController, HomeViewModelDelegate  {
     
     var pokemons : [PokemonDto] = []
     
+    var lastRequestTime: Date?
+    
     init(viewModel : HomeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)

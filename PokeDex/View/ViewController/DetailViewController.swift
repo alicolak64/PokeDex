@@ -7,10 +7,35 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, DetailViewModelDelegate{
+    
+    
+    var pokemon : PokemonDetailExtensionDto?
+    
+    
     private var typeCollectionView: UICollectionView?
+    
     var emptyArray = [String]()
     
+    var pokemonId : Int?
+    
+    let viewModel : DetailViewModel
+    
+    
+    init(viewModel : DetailViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel.delegate = self
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func updatePokemon(pokemon: PokemonDetailExtensionDto) {
+        self.pokemon = pokemon
+    }
+
     lazy var ballImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "pokeball")

@@ -21,6 +21,8 @@ class HomeViewModel {
     private var idSortedPokemons: [PokemonDto] = []
     private var nameSortedPokemons: [PokemonDto] = []
     
+    private var idPageNumber = 1
+    
     private var isSorteedId = true
     
     init(pokemonService: PokemonService) {
@@ -100,7 +102,17 @@ class HomeViewModel {
             sortedPokemons = representedPokemons.sorted { $0.name < $1.name }
         }
         
-        self.delegate?.updatePokemonList(pokemonList: sortedPokemons)
+        var uniquePokemons: [PokemonDto] = []
+        var seenIDs = Set<Int>()
+        for pokemon in sortedPokemons {
+            if !seenIDs.contains(pokemon.id) {
+                uniquePokemons.append(pokemon)
+                seenIDs.insert(pokemon.id)
+            }
+        }
+        
+        self.delegate?.updatePokemonList(pokemonList: uniquePokemons)
+        
     }
     
     private func fetchAllPokemon() {
@@ -132,13 +144,13 @@ class HomeViewModel {
     private func fetchNewPokemonIdSorted() {
         
         if idSortedPokemons.count < AppConstants.allPokemonCount {
-            
-            let pageNumber = (idSortedPokemons.count / AppConstants.pageSize) + 1
-            
-            pokemonService.fetchPokemonByPage(pageNumber: pageNumber) { result in
+                        
+            pokemonService.fetchPokemonByPage(pageNumber: idPageNumber) { [self] result in
                 
                 switch result {
                 case .success(let pokemonList):
+                    
+                    self.idPageNumber = self.idPageNumber + 1
                     
                     let newPagedPokemons = pokemonList.results.map(PokemonDto.init)
                     
@@ -169,7 +181,7 @@ class HomeViewModel {
             
             let startIndex = nameSortedPokemons.count
             let endIndex = min(startIndex + AppConstants.pageSize, allPokemons.count - 1)
-                                    
+            
             self.nameSortedPokemons.append(contentsOf: allPokemons[startIndex...endIndex])
             self.representedPokemons = self.nameSortedPokemons
             

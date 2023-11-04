@@ -8,9 +8,7 @@
 import UIKit
 
 extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSource {
-    
-    
-    
+        
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return pokemons.count
     }
@@ -23,14 +21,32 @@ extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSo
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let contentHeight = scrollView.contentSize.height
-        let visibleHeight = scrollView.bounds.height
-        let scrollOffset = scrollView.contentOffset.y
-        
-        let scrollPercentage = (scrollOffset + visibleHeight) / contentHeight
-        
-        if scrollPercentage >= 0.8 {
-            viewModel.getNewPokemons()
-        }
+            let visibleHeight = scrollView.bounds.height
+            let scrollOffset = scrollView.contentOffset.y
+            
+            let scrollPercentage = (scrollOffset + visibleHeight) / contentHeight
+            
+            if scrollPercentage >= 0.8 {
+                
+                let now = Date()
+                if let lastRequestTime = lastRequestTime, now.timeIntervalSince(lastRequestTime) < 1 {
+                    return 
+                }
+                            
+                viewModel.getNewPokemons()
+                
+                self.lastRequestTime = now
+                
+            }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let pokemonId = pokemons[indexPath.row].id
+        let service : PokemonService = PokemonManager()
+        let destinationViewModel = DetailViewModel(pokemonService: service)
+        let destinationVC = DetailViewController(viewModel: destinationViewModel)
+        destinationVC.pokemonId = pokemonId
+        navigationController?.pushViewController(destinationVC, animated: true)
     }
     
 }
