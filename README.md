@@ -23,13 +23,9 @@ This application is one of the final projects of the iOS Bootcamp organized in c
 ## Screenshots
 | Main Screen | Search Screen |
 |--|--|
-| ![Ekran Resmi 2023-11-05 15 31 14](https://github.com/kadirhankeles/PokeDex/assets/44638560/fb58443e-4e85-4074-b311-94df99cf6cbb)
- | ![Ekran Resmi 2023-11-05 15 31 55](https://github.com/kadirhankeles/PokeDex/assets/44638560/e701adfc-b05c-4592-81a1-a2d085fdd776)
- |
+| ![Ekran Resmi 2023-11-05 15 31 14](https://github.com/kadirhankeles/PokeDex/assets/44638560/fb58443e-4e85-4074-b311-94df99cf6cbb)| ![Ekran Resmi 2023-11-05 15 31 55](https://github.com/kadirhankeles/PokeDex/assets/44638560/e701adfc-b05c-4592-81a1-a2d085fdd776)|
 | **Detail Screen** | **Detail Screen** |
-|![Ekran Resmi 2023-11-05 15 32 12](https://github.com/kadirhankeles/PokeDex/assets/44638560/6603cb93-4e9b-4ee7-bb85-3d693d2af56e)
- |![Ekran Resmi 2023-11-05 15 32 21](https://github.com/kadirhankeles/PokeDex/assets/44638560/e48c1f02-10d8-4d06-abbc-cd3d84b4a00d)
- |
+|![Ekran Resmi 2023-11-05 15 32 12](https://github.com/kadirhankeles/PokeDex/assets/44638560/6603cb93-4e9b-4ee7-bb85-3d693d2af56e)|![Ekran Resmi 2023-11-05 15 32 21](https://github.com/kadirhankeles/PokeDex/assets/44638560/e48c1f02-10d8-4d06-abbc-cd3d84b4a00d)|
 
 
 
