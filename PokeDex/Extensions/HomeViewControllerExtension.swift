@@ -17,7 +17,7 @@ extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "pokemonCVC", for: indexPath) as! PokemonCVC
         
         cell.configure(with: pokemons[indexPath.row])
-
+        
         return cell
     }
     
@@ -65,7 +65,7 @@ extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSo
 extension HomeViewController {
     func initialConfig(){
         
-        let dissmissKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(dissmissKeyboard))
+        //let dissmissKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(dissmissKeyboard))
         //view.addGestureRecognizer(dissmissKeyboardGesture)
         
         let logoImage = UIImage(named: "pokeball2")?.withTintColor(.white, renderingMode: .alwaysOriginal)
@@ -91,12 +91,11 @@ extension HomeViewController {
     
     func setConstraints(){
         NSLayoutConstraint.activate([
-            searchPokemonBar.topAnchor.constraint(equalTo: (navigationController?.navigationBar.bottomAnchor)!,constant: 20),
+            searchPokemonBar.topAnchor.constraint(equalTo: (navigationController?.navigationBar.bottomAnchor)!,constant: 5),
             searchPokemonBar.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 10),
             searchPokemonBar.widthAnchor.constraint(equalToConstant: view.frame.width * 0.85),
             
-            
-            whiteView.topAnchor.constraint(equalTo: searchPokemonBar.bottomAnchor),
+            whiteView.topAnchor.constraint(equalTo: searchPokemonBar.bottomAnchor, constant: 15),
             whiteView.leftAnchor.constraint(equalTo: view.leftAnchor,constant: 10),
             whiteView.rightAnchor.constraint(equalTo: view.rightAnchor,constant: -10),
             whiteView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -10),
@@ -118,6 +117,7 @@ extension HomeViewController {
             sortView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.2),
             sortView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.4)
         ])
+        
     }
     
     

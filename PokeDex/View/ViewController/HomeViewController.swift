@@ -40,13 +40,15 @@ class HomeViewController: UIViewController, HomeViewModelDelegate  {
         searchBar.searchBarStyle = .minimal
         searchBar.searchTextField.backgroundColor = .white
         searchBar.delegate = self
-        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Search Pokemon",attributes: [
+        searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: AppTexts.searchBarPlaceholderText,attributes: [
             .font : UIFont.systemFont(ofSize: 15),
-            .foregroundColor : UIColor.darkGray
+            .foregroundColor : AppColors.placeHolderColor ?? UIColor.darkGray
         ])
-        let newImage = searchBar.searchTextField.leftView as! UIImageView
-        newImage.image?.withTintColor(.red, renderingMode: .alwaysOriginal)
-        searchBar.searchTextField.leftView = newImage
+        searchBar.searchTextField.layer.cornerRadius = 16
+        searchBar.searchTextField.layer.masksToBounds = true
+        let searchIcon = searchBar.searchTextField.leftView as! UIImageView
+        searchIcon.tintColor = AppColors.appRedColor
+        searchBar.searchTextField.leftView = searchIcon
         return searchBar
     }()
     
