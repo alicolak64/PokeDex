@@ -8,6 +8,7 @@
 import UIKit
 
 class TypeCell: UICollectionViewCell {
+    
     static let identifier = "typeCell"
     
     lazy var typeView: UIView = {

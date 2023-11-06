@@ -70,7 +70,7 @@ extension HomeViewController {
     
     func initialConfig(){
         
-        let logoImage = AppIcons.appLogo
+        let logoImage = AppIcons.appLogoSmall
         let barLogo = UIBarButtonItem(image: logoImage, style: .plain, target: self, action: nil)
         let appTitle = UIBarButtonItem(title: AppTexts.appName, style: .plain, target: self, action: nil)
         

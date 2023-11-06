@@ -13,4 +13,9 @@ struct AppTexts {
     static let sortTitleText = "Sort By:"
     static let nameSortText = "  Name"
     static let numberSortText = "  Number"
+    static let aboutText = "About"
+    static let weightText = "Weight"
+    static let heightText = "Height"
+    static let movesText = "Moves"
+    static let statsTitleText = "Base Stats"
 }
