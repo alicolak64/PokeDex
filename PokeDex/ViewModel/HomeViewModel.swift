@@ -69,13 +69,24 @@ class HomeViewModel {
         searchText = text
         if text.count != 0 {
             
-            representedPokemons = allPokemons.filter { pokemon in
+            if (text.first == "#") {
                 
+                representedPokemons = allPokemons.filter { pokemon in
+                    
+                    let searchedLowerText = text.lowercased()
+                    
+                    return pokemon.idString.lowercased().contains(searchedLowerText)
+                    
+                }
                 
-                let searchedLowerText = text.lowercased()
-                
-                return pokemon.name.lowercased().contains(searchedLowerText) || String(pokemon.id).lowercased() == searchedLowerText
-                
+            } else {
+                representedPokemons = allPokemons.filter { pokemon in
+                    
+                    let searchedLowerText = text.lowercased()
+                    
+                    return pokemon.name.lowercased().contains(searchedLowerText)
+                    
+                }
             }
             
         } else {
