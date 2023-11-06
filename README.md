@@ -10,6 +10,8 @@ This application is one of the final projects of the iOS Bootcamp organized in c
 - Programmatic UI
 - URLSession
 - Dependency Injection
+- Animation Pokémon
+- Animation Progress View
 - Kingfisher
 
 ## Contributors
