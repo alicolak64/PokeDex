@@ -107,7 +107,7 @@ class DetailViewController: UIViewController, DetailViewModelDelegate{
 
     lazy var ballImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "pokeball")
+        imageView.image = UIImage(named: "pokeballLarge")
          imageView.backgroundColor = .clear
          imageView.translatesAutoresizingMaskIntoConstraints = false
          return imageView

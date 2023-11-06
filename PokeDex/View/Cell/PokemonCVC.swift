@@ -11,11 +11,13 @@ import Kingfisher
 
 class PokemonCVC: UICollectionViewCell {
     
+    static let identifier = "PokemonCVC"
+    
     private var grayView : UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 10
-        view.backgroundColor = UIColor(hex: "#EFEFEF", alpha: 1)
+        view.backgroundColor = AppColors.cardBackgroundColor
         return view
     }()
     
@@ -29,9 +31,9 @@ class PokemonCVC: UICollectionViewCell {
     private var pokemonIdLabel : UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .gray
+        label.textColor = AppColors.placeHolderColor
         label.textAlignment = .right
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = AppFonts.cardIdFont
         return label
     }()
     
@@ -39,7 +41,8 @@ class PokemonCVC: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.textColor = .black
+        label.textColor = AppColors.blackColor
+        label.font = AppFonts.cardNameFont
         return label
     }()
     
@@ -51,7 +54,7 @@ class PokemonCVC: UICollectionViewCell {
         contentView.layer.shadowColor = UIColor.gray.cgColor
         contentView.layer.shadowOpacity = 0.8
         contentView.layer.masksToBounds = false
-        contentView.backgroundColor = .white
+        contentView.backgroundColor = AppColors.whiteColor
         contentView.addSubviews([grayView,pokemonImage,pokemonIdLabel,pokemonLabelName])
         setLayouts()
     }
@@ -69,6 +72,7 @@ class PokemonCVC: UICollectionViewCell {
     
     func setLayouts(){
         NSLayoutConstraint.activate([
+            
             grayView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             grayView.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             grayView.rightAnchor.constraint(equalTo: contentView.rightAnchor),
@@ -85,7 +89,7 @@ class PokemonCVC: UICollectionViewCell {
             pokemonIdLabel.widthAnchor.constraint(equalToConstant: contentView.frame.width * 0.5),
             
 
-            pokemonLabelName.bottomAnchor.constraint(equalTo: contentView.bottomAnchor , constant: -15),
+            pokemonLabelName.topAnchor.constraint(equalTo: pokemonImage.bottomAnchor , constant: 5),
             pokemonLabelName.leftAnchor.constraint(equalTo: contentView.leftAnchor),
             pokemonLabelName.rightAnchor.constraint(equalTo: contentView.rightAnchor),
         ])

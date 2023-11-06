@@ -9,4 +9,8 @@ import Foundation
 
 struct AppTexts {
     static let searchBarPlaceholderText = "Search"
+    static let appName = "Pokédex"
+    static let sortTitleText = "Sort By:"
+    static let nameSortText = "  Name"
+    static let numberSortText = "  Number"
 }

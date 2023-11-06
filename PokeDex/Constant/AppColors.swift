@@ -13,5 +13,6 @@ struct AppColors {
     static let placeHolderColor  = UIColor(hex: "#666666")
     static let blackColor = UIColor(hex: "#1D1D1D")
     static let whiteColor = UIColor(hex: "#FFFFFF")
+    static let cardBackgroundColor = UIColor(hex: "#EFEFEF", alpha: 1)
     
 }

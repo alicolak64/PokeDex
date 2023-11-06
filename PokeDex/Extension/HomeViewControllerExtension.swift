@@ -14,7 +14,7 @@ extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "pokemonCVC", for: indexPath) as! PokemonCVC
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PokemonCVC.identifier, for: indexPath) as! PokemonCVC
         
         cell.configure(with: pokemons[indexPath.row])
         
@@ -28,10 +28,10 @@ extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSo
         
         let scrollPercentage = (scrollOffset + visibleHeight) / contentHeight
         
-        if scrollPercentage >= 0.8 {
+        if scrollPercentage >= AppConstants.infinityScrollPercentage {
             
             let now = Date()
-            if let lastRequestTime = lastRequestTime, now.timeIntervalSince(lastRequestTime) < 1 {
+            if let lastRequestTime = lastRequestTime, now.timeIntervalSince(lastRequestTime) < AppConstants.infinityScrollLateLimitSecond {
                 return
             }
             
@@ -43,40 +43,38 @@ extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         let pokemonId = pokemons[indexPath.row].id
         let service : PokemonService = PokemonManager()
         let destinationViewModel = DetailViewModel(pokemonService: service)
         let destinationVC = DetailViewController(viewModel: destinationViewModel)
         destinationVC.pokemonId = pokemonId
+        
         let backButton = UIBarButtonItem()
         backButton.title = pokemons[indexPath.row].name
-        backButton.tintColor = .white
+        backButton.tintColor = AppColors.whiteColor
         backButton.style = .plain
         backButton.setTitleTextAttributes([
-            .font: UIFont.boldSystemFont(ofSize:30),
+            .font: AppFonts.titleBoldFont ?? UIFont.boldSystemFont(ofSize:30) ,
         ], for: .normal)
         
         navigationItem.backBarButtonItem = backButton
+        
         navigationController?.pushViewController(destinationVC, animated: true)
+        
     }
     
 }
 
 extension HomeViewController {
+    
     func initialConfig(){
         
-        //let dissmissKeyboardGesture = UITapGestureRecognizer(target: self, action: #selector(dissmissKeyboard))
-        //view.addGestureRecognizer(dissmissKeyboardGesture)
-        
-        let logoImage = UIImage(named: "pokeball2")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        let logoImage = AppIcons.appLogo
         let barLogo = UIBarButtonItem(image: logoImage, style: .plain, target: self, action: nil)
-        barLogo.imageInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
-        let appTitle = UIBarButtonItem(title: "Pokédex", style: .plain, target: self, action: nil)
+        let appTitle = UIBarButtonItem(title: AppTexts.appName, style: .plain, target: self, action: nil)
         
-        
-        appTitle.setTitleTextAttributes([.foregroundColor : UIColor.white, .font : UIFont.systemFont(ofSize: 22, weight: .bold)], for: .normal)
-        appTitle.imageInsets = UIEdgeInsets(top: 20, left: 10, bottom: 0, right: 0)
-        
+        appTitle.setTitleTextAttributes([.foregroundColor : AppColors.whiteColor!, .font : AppFonts.titleBoldFont ?? UIFont.systemFont(ofSize: 30, weight: .bold)], for: .normal)
         
         
         navigationController?.navigationBar.topItem?.leftBarButtonItems = [barLogo,appTitle]
@@ -85,7 +83,7 @@ extension HomeViewController {
         
         pokemonsCollectionView.delegate = self
         pokemonsCollectionView.dataSource = self
-        pokemonsCollectionView.register(PokemonCVC.self, forCellWithReuseIdentifier: "pokemonCVC")
+        pokemonsCollectionView.register(PokemonCVC.self, forCellWithReuseIdentifier: PokemonCVC.identifier)
         
     }
     
@@ -114,8 +112,8 @@ extension HomeViewController {
             
             sortView.topAnchor.constraint(equalTo: sortButton.bottomAnchor , constant: 10),
             sortView.rightAnchor.constraint(equalTo: sortButton.rightAnchor , constant: -10),
-            sortView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.2),
-            sortView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.4)
+            sortView.heightAnchor.constraint(equalToConstant: view.frame.height * 0.18),
+            sortView.widthAnchor.constraint(equalToConstant: view.frame.width * 0.35)
         ])
         
     }
@@ -162,8 +160,10 @@ extension HomeViewController : SortViewProtocol {
         switch newType {
         case .name:
             viewModel.changeSortMethodName()
+            sortButton.setImage(AppIcons.nameSortIcon, for: .normal)
         case .number:
             viewModel.changeSortMethodId()
+            sortButton.setImage(AppIcons.numberSortIcon, for: .normal)
         }
         self.sortView.isHidden = true
     }
