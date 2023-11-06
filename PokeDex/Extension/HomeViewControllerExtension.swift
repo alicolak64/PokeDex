@@ -49,16 +49,7 @@ extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSo
         let destinationViewModel = DetailViewModel(pokemonService: service)
         let destinationVC = DetailViewController(viewModel: destinationViewModel)
         destinationVC.pokemonId = pokemonId
-        
-        let backButton = UIBarButtonItem()
-        backButton.title = pokemons[indexPath.row].name
-        backButton.tintColor = AppColors.whiteColor
-        backButton.style = .plain
-        backButton.setTitleTextAttributes([
-            .font: AppFonts.titleBoldFont ?? UIFont.boldSystemFont(ofSize:30) ,
-        ], for: .normal)
-        
-        navigationItem.backBarButtonItem = backButton
+        destinationVC.pokemons = pokemons
         
         navigationController?.pushViewController(destinationVC, animated: true)
         

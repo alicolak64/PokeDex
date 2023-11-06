@@ -11,6 +11,27 @@ import UIKit
 extension DetailViewController {
     
     func configure() {
+        
+        let backButton = UIButton(type: .custom)
+        backButton.frame = CGRect(x: 0, y: 0, width: 80, height: 50)
+        
+        let arrowImage = AppIcons.arrowBackIcon
+        backButton.setImage(arrowImage, for: .normal)
+        
+        let name = "  " + pokemons.first(where: {$0.id == pokemonId})!.name
+        
+        backButton.setTitle(name , for: .normal)
+        backButton.setTitleColor(AppColors.whiteColor, for: .normal)
+        backButton.titleLabel?.font = AppFonts.titleBoldFont ?? UIFont.boldSystemFont(ofSize: 30)
+        
+        backButton.addTarget(self, action: #selector(backPreviousScreenButtonTapped), for: .touchUpInside)
+        
+        let backButtonItem = UIBarButtonItem(customView: backButton)
+        self.navigationItem.leftBarButtonItem = backButtonItem
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: pokeIdLabel)
+        
+        
+        
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 25
@@ -30,12 +51,16 @@ extension DetailViewController {
         
         layout.sectionInset = UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
         
+        
     }
     
     func setupViews() {
         view.addSubview(ballImage)
         view.addSubview(whiteView)
         view.addSubview(pokemonImage)
+        view.addSubview(backPokemomButton)
+        view.addSubview(nextPokemomButton)
+    
         whiteView.addSubview(typeCollectionView!)
         whiteView.addSubview(aboutLabel)
         whiteView.addSubview(mainHorizantalStack)
@@ -80,9 +105,6 @@ extension DetailViewController {
         progressStack.addArrangedSubview(progressView5)
         progressStack.addArrangedSubview(progressView6)
         
-        
-        
-        
     }
     
     func setConstraints(){
@@ -102,6 +124,12 @@ extension DetailViewController {
             pokemonImage.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             pokemonImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
+            backPokemomButton.bottomAnchor.constraint(equalTo: whiteView.topAnchor, constant: -20),
+            backPokemomButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
+            
+            nextPokemomButton.bottomAnchor.constraint(equalTo: whiteView.topAnchor, constant: -20),
+            nextPokemomButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
+            
             typeCollectionView!.topAnchor.constraint(equalTo: pokemonImage.bottomAnchor),
             typeCollectionView!.widthAnchor.constraint(equalTo: whiteView.widthAnchor),
             typeCollectionView!.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.1),
@@ -114,7 +142,6 @@ extension DetailViewController {
             mainHorizantalStack.leadingAnchor.constraint(equalTo: whiteView.leadingAnchor, constant: 32),
             mainHorizantalStack.trailingAnchor.constraint(equalTo: whiteView.trailingAnchor, constant: -32),
             //mainHorizantalStack.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.2),
-            
             
             
             grayView.widthAnchor.constraint(equalToConstant: 1),
@@ -150,8 +177,40 @@ extension DetailViewController {
             progressView5.widthAnchor.constraint(equalTo: statsHorizantalStack.widthAnchor, multiplier: 0.6),
             progressView6.widthAnchor.constraint(equalTo: statsHorizantalStack.widthAnchor, multiplier: 0.6),
         ])
+        
+        
+        
+        
     }
     
+}
+
+
+extension DetailViewController {
+    
+    @objc func backButtonTapped() {
+        
+        navigationItem.backBarButtonItem?.title = "sdfsdfsdf"
+
+                
+        let previousPokemonId = pokemons[(currentPokemonIndex ?? 0) - 1].id
+        
+        pokemonId = previousPokemonId
+        
+        self.viewModel.getPokemon(pokemonId: previousPokemonId)
+        
+    }
+    
+    @objc func nextButtonTapped() {
+        
+        navigationItem.backBarButtonItem?.title = "sdfsdfsdf"
+                
+        let nextPokemonId = pokemons[(currentPokemonIndex ?? 0) + 1].id
+        
+        pokemonId = nextPokemonId
+        
+        self.viewModel.getPokemon(pokemonId: nextPokemonId)
+    }
 }
 
 

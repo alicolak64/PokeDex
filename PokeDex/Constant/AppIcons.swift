@@ -18,6 +18,9 @@ struct AppIcons {
     static let radioButtonUncheched = UIImage(named: "radio_button_unchecked")
     static let weightIcon = UIImage(named: "weight")
     static let heightIcon = UIImage(named: "straighten")
+    static let backPokomonIcon = UIImage(named: "chevron_left")
+    static let nextPokomonIcon = UIImage(named: "chevron_right")
+    static let arrowBackIcon = UIImage(named: "arrow_back")
 }
 
 

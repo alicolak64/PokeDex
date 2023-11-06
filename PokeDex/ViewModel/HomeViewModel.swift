@@ -55,7 +55,9 @@ class HomeViewModel {
     
     func getNewPokemons() {
         if let searchText {
-            return
+            if !searchText.isEmpty {
+                return
+            }
         }
         if isSorteedId {
             fetchNewPokemonIdSorted()
