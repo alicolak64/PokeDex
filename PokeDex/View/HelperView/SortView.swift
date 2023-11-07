@@ -100,15 +100,13 @@ class SortView: UIView {
     
     
     
-    @objc
-    func sortAccordingToTheNumber(){
+    @objc func sortAccordingToTheNumber(){
         numberSortedRadioButton.setImage(AppIcons.radioButtonCheched, for: .normal)
         nameSortRadioButton.setImage(AppIcons.radioButtonUncheched, for: .normal)
         mainController?.sortTypeChanged(newType: .number)
     }
     
-    @objc
-    func sortAccordingToTheName(){
+    @objc func sortAccordingToTheName(){
         numberSortedRadioButton.setImage(AppIcons.radioButtonUncheched, for: .normal)
         nameSortRadioButton.setImage(AppIcons.radioButtonCheched, for: .normal)
         mainController?.sortTypeChanged(newType: .name)

@@ -33,6 +33,16 @@ class HomeViewModel {
     
     func changeSortMethodId() {
         
+        if let searchText {
+            if !searchText.isEmpty {
+                if !isSorteedId {
+                    isSorteedId = true
+                }
+                representPokemons()
+                return
+            }
+        }
+        
         if !isSorteedId {
             representedPokemons = idSortedPokemons
             isSorteedId = true
@@ -43,6 +53,16 @@ class HomeViewModel {
     }
     
     func changeSortMethodName() {
+                
+        if let searchText {
+            if !searchText.isEmpty {
+                if isSorteedId {
+                    isSorteedId = false
+                }
+                representPokemons()
+                return
+            }
+        }
         
         if isSorteedId {
             representedPokemons = nameSortedPokemons
@@ -110,7 +130,7 @@ class HomeViewModel {
     
     private func representPokemons() {
         var sortedPokemons: [PokemonDto]
-        
+                
         if isSorteedId {
             sortedPokemons = representedPokemons.sorted { $0.id < $1.id }
         } else {

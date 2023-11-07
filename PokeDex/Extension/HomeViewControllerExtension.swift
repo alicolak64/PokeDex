@@ -22,6 +22,10 @@ extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSo
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        closeSearchResignFirstResponder()
+
+        
         let contentHeight = scrollView.contentSize.height
         let visibleHeight = scrollView.bounds.height
         let scrollOffset = scrollView.contentOffset.y
@@ -50,6 +54,8 @@ extension HomeViewController : UICollectionViewDelegate , UICollectionViewDataSo
         let destinationVC = DetailViewController(viewModel: destinationViewModel)
         destinationVC.pokemonId = pokemonId
         destinationVC.pokemons = pokemons
+        
+        closeSearchResignFirstResponder()
         
         navigationController?.pushViewController(destinationVC, animated: true)
         
@@ -113,6 +119,8 @@ extension HomeViewController {
     @objc
     func sortButtonPressed(){
         
+        closeSearchResignFirstResponder()
+        
         let sortViewState = self.sortView.isHidden
         
         
@@ -124,23 +132,22 @@ extension HomeViewController {
         
     }
     
-    
-    @objc
-    func dissmissKeyboard(){
-        view.endEditing(true)
-    }
-    
 }
 
 extension HomeViewController : UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        
+                
         if let searchedText = searchBar.text {
             let searchedLowerText = searchedText.lowercased()
             viewModel.searchPokemon(text: searchedLowerText)
         }
         
+        sortView.nameSortRadioButton.isUserInteractionEnabled = true
+        sortView.numberSortedRadioButton.isUserInteractionEnabled = true
+        
+    }
+    func closeSearchResignFirstResponder() {
+        searchPokemonBar.resignFirstResponder()
     }
 }
 
