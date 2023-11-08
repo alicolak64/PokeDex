@@ -189,9 +189,6 @@ extension DetailViewController {
 extension DetailViewController {
     
     @objc func backButtonTapped() {
-        
-        navigationItem.backBarButtonItem?.title = "sdfsdfsdf"
-
                 
         let previousPokemonId = pokemons[(currentPokemonIndex ?? 0) - 1].id
         
@@ -202,9 +199,7 @@ extension DetailViewController {
     }
     
     @objc func nextButtonTapped() {
-        
-        navigationItem.backBarButtonItem?.title = "sdfsdfsdf"
-                
+                        
         let nextPokemonId = pokemons[(currentPokemonIndex ?? 0) + 1].id
         
         pokemonId = nextPokemonId
