@@ -58,7 +58,7 @@ The data source is [Pokedex Api](https://pokeapi.co/).
 
 ## Video
 
-[![Video](https://img.youtube.com/vi/3GyRpz8YmBE/maxresdefault.jpg)](https://youtu.be/3GyRpz8YmBE)
+[![Video](https://img.youtube.com/vi/9T_dt34Y5b8/maxresdefault.jpg)](https://youtu.be/9T_dt34Y5b8)
 
 
 
