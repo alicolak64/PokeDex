@@ -215,7 +215,7 @@ class HomeViewModel {
         if nameSortedPokemons.count < AppConstants.allPokemonCount {
             
             let startIndex = nameSortedPokemons.count
-            let endIndex = min(startIndex + AppConstants.pageSize, allPokemons.count - 1)
+            let endIndex = min(startIndex + AppConstants.pageSize - 1, allPokemons.count - 1)
             
             self.nameSortedPokemons.append(contentsOf: allPokemons[startIndex...endIndex])
             self.representedPokemons = self.nameSortedPokemons
